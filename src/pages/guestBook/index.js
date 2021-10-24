@@ -15,11 +15,11 @@ const GuestBook = () => {
 
     const openModal = (e) => {
         e.preventDefault();
-        setModalVisible(true)
+        setModalVisible(true);
     }
 
     const closeModal = () => {
-        setModalVisible(false)
+        setModalVisible(false);
     }
     const getGuestBooks = () => { //방명록 정보를 반환하는 함수
         const guestbooks = [
