@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/styles/all.css';
 import '../assets/styles/writing_page.css';
+import PasswordModal from '../passwordModal';
 
 const WritingPage = () => {
 
@@ -12,6 +13,18 @@ const WritingPage = () => {
         {reply_no:2, con_num:1, reply_id:'아이디 입니다.', reply_content:'블라블라블라블라블라블라', reply_date:'2021.10.07'},
         {reply_no:1, con_num:1, reply_id:'ㅇㅇ', reply_content:'블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라', reply_date:'2021.10.07'}
     ];
+
+    const [modalSee, setModalSee] = useState(false);
+
+    const modalOpen = (e) => {
+        e.preventDefault();
+        setModalSee(true)
+    }
+
+    const modalClose = () => {
+        setModalSee(false);
+        console.log(setModalSee);
+    }
 
     return(
         <>
@@ -42,7 +55,15 @@ const WritingPage = () => {
                                             <p>{reply_date}</p>
                                         </div>
                                         <div className="page_comments_button">
-                                            <button>삭제</button>
+                                            <button onClick={modalOpen}>삭제</button>
+                                            {
+                                                modalSee && <PasswordModal
+                                                visible={modalSee}
+                                                closable={true}
+                                                maskClosable={true}
+                                                onClose={modalClose}>
+                                                </PasswordModal>
+                                            }
                                         </div>
                                     </div>
                                 )
@@ -54,6 +75,10 @@ const WritingPage = () => {
                                     <p>닉네임</p>
                                     <input></input>
                                 </div>
+                                {/* <div className="page_comments_text_pw">
+                                    <p>비밀번호</p>
+                                    <input></input>
+                                </div> */}
                             </div>
                             <textarea></textarea>
                             <button>입력</button>

@@ -6,31 +6,55 @@ import { Table, CardHeader } from "reactstrap";
 import { Row, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PasswordModal from "../passwordModal";
+import axios from 'axios';
+import Pagination from "../pagination";
+import { paginate } from "../pagination/paginate";
 
 const GuestBook = () => {
     const [modalVisible, setModalVisible] = useState(false);
 
-    const openModal = () => {
+    const openModal = (e) => {
+        e.preventDefault();
         setModalVisible(true)
     }
 
     const closeModal = () => {
         setModalVisible(false)
     }
+    const getGuestBooks = () => { //방명록 정보를 반환하는 함수
+        const guestbooks = [
+            {guestbook_no: 10, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '잘부탁드려요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:1},
+            {guestbook_no: 9, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '만나서 반갑습니다', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:2},
+            {guestbook_no: 8, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '안녕하세요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:3},
+            {guestbook_no: 7, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '잘부탁드려요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:4},
+            {guestbook_no: 6, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '만나서 반갑습니다', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:5},
+            {guestbook_no: 5, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '안녕하세요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:6},
+            {guestbook_no: 4, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '잘부탁드려요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:7},
+            {guestbook_no: 3, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '만나서 반갑습니다', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:8},
+            {guestbook_no: 2, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '안녕하세요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:9},
+            {guestbook_no: 1, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '잘부탁드려요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:10}
+        ]
+        return guestbooks;
+    }
+    
 
-    const guestbooks = [
-        {guestbook_no: 10, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '잘부탁드려요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:1},
-        {guestbook_no: 9, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '만나서 반갑습니다', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:2},
-        {guestbook_no: 8, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '안녕하세요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:3},
-        {guestbook_no: 7, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '잘부탁드려요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:4},
-        {guestbook_no: 6, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '만나서 반갑습니다', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:5},
-        {guestbook_no: 5, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '안녕하세요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:6},
-        {guestbook_no: 4, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '잘부탁드려요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:7},
-        {guestbook_no: 3, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '만나서 반갑습니다', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:8},
-        {guestbook_no: 2, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '안녕하세요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:9},
-        {guestbook_no: 1, guestbook_id:'ㅇㅇ', guestbook_password : '1234', guestbook_title: '잘부탁드려요', guestbook_content:'아아아아아', guestbook_date:'21.09.26', guestbook_hit:10}
-    ]
+    const [guestbooks, setGuestbooks] = useState({ //방명록 정보를 담는 state
+        data: getGuestBooks(),
+        pageSize: 5, //한 페이지에 보여줄 아이템(방명록) 개수
+        currentPage:1 //현재 활성화된 페이지 위치
+    });
 
+    const handlePageChange = (page) => {
+        setGuestbooks({...guestbooks, currentPage:page});
+    }
+
+    const {data, pageSize, currentPage} = guestbooks;
+    const pagedGuestbooks = paginate (data, currentPage, pageSize); //페이지 별로 아이템이 속한 배열을 얻어옴
+
+    const {length : count} = guestbooks.data;
+    if(count === 0)
+        return <p>방명록 정보가 없습니다.</p>;
+    
     return(
         <>
             <Container className="guestbook mt-5 mb-5">
@@ -51,7 +75,7 @@ const GuestBook = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                    {guestbooks.map((guestbook, key) => {
+                                    {pagedGuestbooks.map((guestbook, key) => {
                                         const {guestbook_no, guestbook_id, guestbook_title, guestbook_date, guestbook_hit} = guestbook;
                                         return(
                                             <tr key={key}>
@@ -97,6 +121,12 @@ const GuestBook = () => {
                                 </tr>
                             </tbody>
                         </Table>
+                        <Pagination
+                        pageSize={guestbooks.pageSize}
+                        itemsCount = {count}
+                        currentPage = {currentPage}
+                        onPageChange = {handlePageChange}
+                        />
                     </Row>
                 </CardHeader>
             </Container>

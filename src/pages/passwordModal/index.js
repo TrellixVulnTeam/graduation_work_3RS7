@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import '../assets/styles/passwordModal.css';
 import CloseButton from './closeButton';
 
 const PasswordModal = ({className, onClose, maskClosable, closable, visible, children}) => {
+
     const onMaskClick = (e) => {
         if (e.target === e.currentTarget) {
             onClose(e)
@@ -16,6 +17,15 @@ const PasswordModal = ({className, onClose, maskClosable, closable, visible, chi
             onClose(e)
         }
     }
+
+    useEffect(() => {
+        document.body.style.cssText = `position: fixed; top: -${window.scrollY}px`
+        return () => {
+          const scrollY = document.body.style.top
+          document.body.style.cssText = `position: ""; top: "";`
+          window.scrollTo(0, parseInt(scrollY || '0') * -1)
+        }
+      }, [])
     
     return(
         <>
@@ -36,10 +46,14 @@ const PasswordModal = ({className, onClose, maskClosable, closable, visible, chi
     )
 }
 
-PasswordModal.propTypes = {
+PasswordModal.defaultProps = {
     closable: true,
     maskClosable: true,
     visible : false
+}
+
+PasswordModal.propTypes = {
+    visible : PropTypes.bool,
 }
 
 const ModalWrapper = styled.div`
