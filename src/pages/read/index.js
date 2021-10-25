@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/styles/all.css';
 import '../assets/styles/read_page.css';
@@ -49,6 +50,7 @@ const Read = () => {
                             </div>
                             <div className="page_comments_top">
                                 <p>댓글 5개</p>
+                                <Link to={"/writingupdate"}><button className="page_comments_top_button">수정</button></Link>
                             </div>
                             <div className="page_comments_all">
                                 {replies.map((reply, key) => {

@@ -47,9 +47,9 @@
 .page_comments_top > p {
     float: left;
 }
-.page_comments_top > button {
+.page_comments_top_button{
     float: right;
-    background-color: #FFAC21;
+    background-color: #83A0D2;
     color: white;
     border-radius: 10px;
     border:#ebebeb;
