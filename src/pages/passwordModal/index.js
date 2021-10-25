@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import '../assets/styles/passwordModal.css';
 import CloseButton from './closeButton';
 
-const PasswordModal = ({className, onClose, maskClosable, closable, visible, children}) => {
+const PasswordModal = ({className, onClose, maskClosable, closable, visible, password, pwInput, children}) => {
 
     const onMaskClick = (e) => {
         if (e.target === e.currentTarget) {
@@ -36,8 +36,8 @@ const PasswordModal = ({className, onClose, maskClosable, closable, visible, chi
             tabIndex="-1"
             visible={visible}>
                 <ModalInner tabIndex="0" className="modal-inner">
-                    비밀번호 :<input type="password" className="passwordInput"></input>
-                    <button type="input" className="inputBtn">입력</button>
+                    비밀번호 :<input type="password" className="passwordInput" onChange={password}></input>
+                    <button type="input" className="inputBtn" onClick={pwInput}>입력</button>
                     {closable && <CloseButton className="modal-close" onClick={close} />}
                     {children}
                 </ModalInner>
