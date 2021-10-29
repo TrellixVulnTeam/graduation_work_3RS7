@@ -1,24 +1,26 @@
 import React, {useState, useEffect} from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import '../assets/styles/all.css';
 import '../assets/styles/writing.css';
 
-const WritingUpdate = () => {
+const WritingUpdate = (props) => {
     const [newName, setNewName] = useState('');
     const [newPw, setNewPw] = useState('');
     const [newTitle, setNewTitle] = useState('');
     const [newContent, setNewContent] = useState('');
     const [newBoardList, setNewBoardList] = useState([]);
 
+    const idx = useParams().id;
+
     useEffect(() => {
-        axios.get('http://localhost:3001/guestbook').then((response) => {
+        axios.get(`http://localhost:3001/read/${idx}`).then((response) => {
             setNewBoardList(response.data);
         })
     }, []);
 
     const updateBoard = (idx) => {
-        axios.put("http://localhost:3001/update", {
+        axios.put(`http://localhost:3001/update/${idx}`, {
             id:idx,
             name:newName,
             pw:newPw,

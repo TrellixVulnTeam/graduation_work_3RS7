@@ -5,6 +5,7 @@ import GuestBook from "../guestBook/index";
 import Writing from "../writing/index";
 import Read from '../read';
 import WritingUpdate from '../writing_update';
+import UpdatePasswordCheck from '../updatePasswordCheck';
 
 export default () => (
     <BrowserRouter>
@@ -12,8 +13,9 @@ export default () => (
             <Route exact path="/" component={Test}/>
             <Route path="/guestbook" component={GuestBook}/>
             <Route path="/writing" component={Writing}/>
-            <Route path="/read" component={Read}/>
-            <Route path="/writingupdate" component={WritingUpdate}/>
+            <Route path="/read/:id" component={Read}/>
+            <Route path="/writingupdate/:id" component={WritingUpdate}/>
+            <Route path="/updatepasswordcheck/:id" component={UpdatePasswordCheck}/>
         </Switch>
     </BrowserRouter>
 )

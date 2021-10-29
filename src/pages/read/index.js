@@ -1,19 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../assets/styles/all.css';
 import '../assets/styles/read_page.css';
-import PasswordModal from '../passwordModal';
 
-const Read = () => {
-    const [boardSubstance, setBoardSubstance] = useState([]);
+const Read = (props) => {
+    const idx = useParams().id;
+    const [boardRead, setBoardRead] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3001/guestbook').then((response) => {
-            setBoardSubstance(response.data);
+        axios.get(`http://localhost:3001/read/${idx}`).then((response) => {
+            setBoardRead(response.data);
+            console.log(response);
         })
     }, []);
+
+    const deleteBoard = (idx) => {
+        axios.delete(`http://localhost:3001/delete/${idx}`); 
+    };
+
+    const readBoard = (idx) => {
+        axios.get(`http://localhost:3001/read/${idx}`);
+        console.log(idx, "<== guestbook (아이디 확인)");
+    }
 
     const replies = [
         {reply_no:5, con_num:1, reply_id:'ㅇㅇ', reply_content:'블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라', reply_date:'2021-10-07 20:06:55'},
@@ -23,35 +33,29 @@ const Read = () => {
         {reply_no:1, con_num:1, reply_id:'ㅇㅇ', reply_content:'블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라', reply_date:'2021-10-07 20:06:55'}
     ];
 
-    const [modalSee, setModalSee] = useState(false);
-
-    const modalOpen = (e) => {
-        e.preventDefault();
-        setModalSee(true);
-    }
-
-    const modalClose = () => {
-        setModalSee(false);
-    }
-
     return(
         
         <>
-            {boardSubstance.map((val, key) => {
-                return(
-                    <form className="read_page" method="post" key={key}>
+                    <form className="read_page" method="post">
                         <article className="read_page_start">
-                            <div className="page_top">
-                                <h4>{val.title}</h4>
-                                <p>작성자 : {val.name}&nbsp;&nbsp;|&nbsp;&nbsp;작성일 : {val.date}</p>
-                            </div>
-                            <div className="page_content">
-                                <p>{val.content}</p>
-                            </div>
-                            <div className="page_comments_top">
-                                <p>댓글 5개</p>
-                                <Link to={"/writingupdate"}><button className="page_comments_top_button">수정</button></Link>
-                            </div>
+                            {boardRead.map((value) => {
+                                return(
+                                    <>
+                                        <div className="page_top">
+                                            <h4>{value.title}</h4>
+                                            <p>작성자 : {value.name}&nbsp;&nbsp;|&nbsp;&nbsp;작성일 : {value.date}&nbsp;&nbsp;|&nbsp;&nbsp;조회수 : {value.hit}</p>
+                                        </div>
+                                        <div className="page_content">
+                                            <p>{value.content}</p>
+                                        </div>
+                                        <div className="page_comments_top">
+                                            <h5>댓글</h5>
+                                            <Link to={`/writingupdate/${value.id}`}><button className="page_comments_top_button">수정</button></Link>
+                                            {/* onClick={()=> {readBoard(value.id)}} */}
+                                        </div>
+                                    </>
+                                )
+                            })}
                             <div className="page_comments_all">
                                 {replies.map((reply, key) => {
                                     const{reply_id, reply_content, reply_date} = reply;
@@ -67,15 +71,7 @@ const Read = () => {
                                                     <p>{reply_date}</p>
                                                 </div>
                                                 <div className="page_comments_button">
-                                                    <button onClick={modalOpen}>삭제</button>
-                                                    {
-                                                        modalSee && <PasswordModal
-                                                        visible={modalSee}
-                                                        closable={true}
-                                                        maskClosable={true}
-                                                        onClose={modalClose}>
-                                                        </PasswordModal>
-                                                    }
+                                                    <Link to={'/passwordcheck'}><button className="page_comments_realButton">삭제</button></Link>
                                                 </div>
                                             </div>
                                         )
@@ -98,8 +94,6 @@ const Read = () => {
                             </div>
                         </article>
                     </form>
-                )
-            })}
         </>
     ) 
 }

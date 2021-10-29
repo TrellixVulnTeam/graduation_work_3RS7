@@ -44,7 +44,7 @@
     padding-right:30px;
     color:#83A0D2;
 }
-.page_comments_top > p {
+.page_comments_top > h5 {
     float: left;
 }
 .page_comments_top_button{
@@ -96,12 +96,15 @@
     padding-top:15px;
     text-align: center;
 }
-.page_comments_button > button {
+.page_comments_realButton {
     background-color: #FFAC21;
     color: white;
     border-radius: 10px;
     border:#ebebeb;
 }
+/* .page_comments_button > button {
+    
+} */
 .page_comments_text{
     margin-top:20px;
     padding:20px;
