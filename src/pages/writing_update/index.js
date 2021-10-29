@@ -14,7 +14,7 @@ const WritingUpdate = (props) => {
     const idx = useParams().id;
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/read/${idx}`).then((response) => {
+        axios.get(`http://localhost:3001/update/${idx}`).then((response) => {
             setNewBoardList(response.data);
         })
     }, []);
@@ -40,7 +40,7 @@ const WritingUpdate = (props) => {
                     <form className="writing" key={key}>
                         <article className="writing_start">
                             <div className="title">
-                                <h1>방명록 등록하기</h1>
+                                <h1>방명록 수정하기</h1>
                             </div>
                             <div className="writing_nickname">
                                 <h5>닉네임 :</h5>

@@ -1,4 +1,4 @@
-.checkAll{
+.deleteAll{
     width:100%;
     min-height:720px;
     height:100%;
@@ -6,7 +6,7 @@
     justify-content: center;
     align-items: center;
 }
-.check_password{
+.delete_title{
     width:500px;
     height:100px;
     border :1px solid #fff;
@@ -15,25 +15,13 @@
     justify-content: center;
     align-items: center;
 }
-.check_password > h4 {
+.delete_title > h4 {
     float: left;
+    margin-right:10px;
 }
-.check_password > input {
-    margin-left:10px;
-    border:none;
-    float:left;
-}
-.check_password > input:focus {
-    outline:3px solid #C0D4F8;
-}
-.check_password > button {
-    margin-left:10px;
+.delete_button {
     border-radius: 5px;
     color:#83A0D2;
     border:#ebebeb;
     background-color: #fff;
-}
-.check_password > p{
-    color:red;
-    margin-left: 10px;
 }

@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import '../assets/styles/all.css';
 import '../assets/styles/updatePasswordCheck.css';
 
-const UpdatePasswordCheck = (props) => {
+const DeletePasswordCheck = (props) => {
     const [password, setPassword] = useState("");
 
     const [pwStatus,setPwStatus] = useState("");
@@ -21,7 +21,7 @@ const UpdatePasswordCheck = (props) => {
                 setPwStatus(response.data.message);
                 alert("비밀번호가 틀렸습니다. 다시 입력해주세요.");
             } else {
-                props.history.push(`/writingupdate/${idx}`);
+                props.history.push(`/delete/${idx}`);
             }
         });
     };
@@ -40,4 +40,4 @@ const UpdatePasswordCheck = (props) => {
     )
 }
 
-export default UpdatePasswordCheck;
+export default DeletePasswordCheck;

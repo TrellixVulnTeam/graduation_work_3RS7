@@ -50,8 +50,8 @@ const Read = (props) => {
                                         </div>
                                         <div className="page_comments_top">
                                             <h5>댓글</h5>
-                                            <Link to={`/writingupdate/${value.id}`}><button className="page_comments_top_button">수정</button></Link>
-                                            {/* onClick={()=> {readBoard(value.id)}} */}
+                                            <Link to={`/deletepasswordcheck/${value.id}`}><button className="page_comments_top_button">삭제</button></Link>
+                                            <Link to={`/updatepasswordcheck/${value.id}`}><button className="page_comments_top_button">수정</button></Link>
                                         </div>
                                     </>
                                 )
