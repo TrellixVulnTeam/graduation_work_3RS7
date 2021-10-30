@@ -190,3 +190,8 @@
     text-align: center;
     margin-left:10px;
 }
+.reply_pagination{
+    display:flex;
+    justify-content: center;
+    margin-top:20px;
+}
