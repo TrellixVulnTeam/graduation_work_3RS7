@@ -127,7 +127,7 @@
     outline:3px solid #C0D4F8;
     resize: none;
 }
-.page_comments_text > button {
+.page_comments_text_button {
     margin-left:20px;
     background-color: #83A0D2;
     color: white;

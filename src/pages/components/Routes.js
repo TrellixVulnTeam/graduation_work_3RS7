@@ -8,6 +8,9 @@ import WritingUpdate from '../writing_update';
 import UpdatePasswordCheck from '../updatePasswordCheck';
 import DeletePasswordCheck from '../deletePasswordCheck';
 import Delete from "../delete";
+import DeleteReplyPassword from "../deleteReplyPassword";
+import DeleteReply from "../deleteReply";
+import Empty from "../Empty";
 
 export default () => (
     <BrowserRouter>
@@ -20,6 +23,11 @@ export default () => (
             <Route path="/updatepasswordcheck/:id" component={UpdatePasswordCheck}/>
             <Route path="/deletepasswordcheck/:id" component={DeletePasswordCheck}/>
             <Route path="/delete/:id" component={Delete}/>
+            <Route path="/deletereplypassword/:id/:replyid" component={DeleteReplyPassword}/>
+            <Route path="/deletereply/:id/:replyid" component={DeleteReply}/>
+            <Route>
+                <Empty/>
+            </Route>
         </Switch>
     </BrowserRouter>
 )
